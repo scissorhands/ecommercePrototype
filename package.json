@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha test.js",
+    "test-category": "mocha -g 'Category'"
   },
   "author": "scissorhands",
   "license": "ISC",
