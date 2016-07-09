@@ -4,7 +4,7 @@ var superagent = require('superagent');
 var assert = require('assert');
 var models = require('./models');
 
-var URL_ROOT = 'http://localhost:3000/api/v1';
+var URL_ROOT = 'http://localhost:3000';
 
 /*
 describe('User api', function(){
@@ -160,13 +160,12 @@ describe('Category API', function(){
 		app.use( require('./api')(wagner) );
 
 		server = app.listen(3000);
-		//console.log(server);
 		Category = models.Category;
 		Product = models.Product;
 	});
 
 	after( function(){
-		//server.close();
+		server.close();
 	});
 
 	beforeEach(function(done){
@@ -183,7 +182,6 @@ describe('Category API', function(){
 		Category.create({ _id: 'Electronics' }, function(error, doc){
 			assert.ifError(error);
 			var url = URL_ROOT+'/category/id/Electronics';
-
 			superagent.get(url, function(error, res){
 				assert.ifError(error);
 				var result;
@@ -232,19 +230,18 @@ describe('Product Api', function(){
 	var Product;
 
 	before( function(){
-		//var app = express();
+		var app = express();
 
-		// models = require('./models')(wagner);
-		//app.use( require('./api')(wagner) );
+		//models = require('./models')(wagner);
+		app.use( require('./api')(wagner) );
 
-		//server = app.listen(3000);
-		//console.log(server);
+		server = app.listen(3000);
 		Category = models.Category;
 		Product = models.Product;
 	});
 
 	after( function(){
-		//server.close();
+		server.close();
 	});
 
 	beforeEach(function(done){
