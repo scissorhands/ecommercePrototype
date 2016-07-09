@@ -1,9 +1,6 @@
 var bodyparser = require('body-parser');
 var express = require('express');
 var status = require('http-status');
-var wagner = require('wagner-core');
-var models = require('./models')(wagner);
-var User = models.User;
 
 function handleOne( property, res, error, result){
 	if(error){
@@ -32,34 +29,6 @@ function handleMany(property, res, error, result){
 module.exports = function(wagner){
 	var api = express.Router();
 	api.use(bodyparser.json());
-	api.use(function(req, res, next){
-		/*
-		var user = new User({
-			profile:{
-				username:'scissorhands',
-				picture:'http://pbs.twimg.com/profile_images/421681011047428096/-nHfVGt2_bigger.jpeg'
-			},
-			data:{
-				oauth: 'invalid',
-				cart: []
-			}
-		});
-		user.save(function(error){
-			if(error){
-				console.log(error);
-			}
-			User.findOne({}, function(error, user){
-				req.user = user;
-				next();
-			});
-		});
-		User.findOne({}, function(error, user){
-			req.user = user;
-			next();
-		});
-		*/
-		next();
-	});
 
 	api.get('/me', function(req, res){
 		if(!req.user){

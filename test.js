@@ -2,7 +2,7 @@ var express = require('express');
 var wagner = require('wagner-core');
 var superagent = require('superagent');
 var assert = require('assert');
-//var models = require('./models');
+var models = require('./models');
 
 var URL_ROOT = 'http://localhost:3000/api/v1';
 
@@ -154,12 +154,12 @@ describe('Category API', function(){
 	var Product;
 
 	before( function(){
-		//var app = express();
+		var app = express();
 
 		models = require('./models')(wagner);
-		//app.use( require('./api')(wagner) );
+		app.use( require('./api')(wagner) );
 
-		//server = app.listen(3000);
+		server = app.listen(3000);
 		//console.log(server);
 		Category = models.Category;
 		Product = models.Product;
