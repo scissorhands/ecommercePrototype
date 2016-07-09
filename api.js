@@ -58,6 +58,7 @@ module.exports = function(wagner){
 			next();
 		});
 		*/
+		next();
 	});
 
 	api.get('/me', function(req, res){
