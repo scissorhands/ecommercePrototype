@@ -6,6 +6,7 @@ var models = require('./models');
 
 var URL_ROOT = 'http://localhost:3000/api/v1';
 
+/*
 describe('User api', function(){
 	var server;
 	var Category;
@@ -146,26 +147,26 @@ describe('User api', function(){
 	});
 
 });
-/*
+*/
 describe('Category API', function(){
 	var server;
 	var Category;
 	var Product;
 
 	before( function(){
-		var app = express();
+		//var app = express();
 
 		models = require('./models')(wagner);
-		app.use( require('./api')(wagner) );
+		//app.use( require('./api')(wagner) );
 
-		server = app.listen(3000);
-		console.log(server);
+		//server = app.listen(3000);
+		//console.log(server);
 		Category = models.Category;
 		Product = models.Product;
 	});
 
 	after( function(){
-		server.close();
+		//server.close();
 	});
 
 	beforeEach(function(done){
@@ -324,4 +325,3 @@ describe('Category API', function(){
 		});
 	});
 });
-*/

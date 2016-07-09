@@ -53,11 +53,11 @@ module.exports = function(wagner){
 				next();
 			});
 		});
-		*/
 		User.findOne({}, function(error, user){
 			req.user = user;
 			next();
 		});
+		*/
 	});
 
 	api.get('/me', function(req, res){
