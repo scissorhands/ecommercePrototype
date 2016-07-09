@@ -17,7 +17,8 @@ module.exports = new mongoose.Schema({
 		oauth: { type: String, required: true },
 		cart: [{
 			product:{
-				type: mongoose.Schema.Types.ObjectId
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Product'
 			},
 			quantity: {
 				type: Number,

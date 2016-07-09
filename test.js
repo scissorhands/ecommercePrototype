@@ -26,9 +26,8 @@ describe('User api', function(){
 		User = models.User;
 	});
 
-	after( function(){
+	afterEach( function(done){
 		//server.close();
-		/*
 		Category.remove({}, function(error){
 			assert.ifError(error);
 			Product.remove({}, function(error){
@@ -39,7 +38,6 @@ describe('User api', function(){
 				});
 			});
 		});
-		*/
 	});
 
 	beforeEach(function(done){
@@ -78,7 +76,7 @@ describe('User api', function(){
 			}
 		];
 
-		var user = [{
+		var users = [{
 			profile:{
 				username:'scissorhands',
 				picture:'http://pbs.twimg.com/profile_images/421681011047428096/-nHfVGt2_bigger.jpeg'
@@ -93,21 +91,22 @@ describe('User api', function(){
 			assert.ifError(error);
 			Product.create(products, function(error, products){
 				assert.ifError(error);
-				done();
+				User.create( users, function(error, users){
+					assert.ifError(error);
+					done();
+				});
 			});
 		});
-
 	});
 
-	/*
 	it('can save an users cart', function(done) {
 		var url = URL_ROOT+'/me/cart';
-		console.log(url);
-		superagent.put(url).send({
+		var product = {
 			data:{
 				cart: { product: PRODUCT_ID, quantity: 1 }
 			}
-		}).end(function(error, res){
+		};
+		superagent.put(url).send(product).end(function(error, res){
 			assert.ifError(error);
 			assert.equal(res.status, 200);
 			User.findOne({}, function(error, user){
@@ -119,7 +118,6 @@ describe('User api', function(){
 			});
 		});
 	});
-	*/
 
 	it('can load users cart', function(done){
 		var url = URL_ROOT+'/me';
@@ -137,11 +135,9 @@ describe('User api', function(){
 					assert.doesNotThrow(function(){
 						result = JSON.parse(res.text).user;
 					});
-					//console.log(result.data.cart[0].product.name);
-					//process.exit(1);
+
 					assert.equal( result.data.cart.length, 1);
-					assert.equal( result.data.cart[0].product, PRODUCT_ID);
-					//assert.equal( result.data.cart[0].product.name, PRODUCT_ID);
+					assert.equal( result.data.cart[0].product.name, 'Asus Zenbook Prime');
 					assert.equal( result.data.cart[0].quantity, 1);
 					done();
 				});

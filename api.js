@@ -33,6 +33,7 @@ module.exports = function(wagner){
 	var api = express.Router();
 	api.use(bodyparser.json());
 	api.use(function(req, res, next){
+		/*
 		var user = new User({
 			profile:{
 				username:'scissorhands',
@@ -51,6 +52,11 @@ module.exports = function(wagner){
 				req.user = user;
 				next();
 			});
+		});
+		*/
+		User.findOne({}, function(error, user){
+			req.user = user;
+			next();
 		});
 	});
 
