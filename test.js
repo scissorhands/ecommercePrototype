@@ -2,7 +2,7 @@ var express = require('express');
 var wagner = require('wagner-core');
 var superagent = require('superagent');
 var assert = require('assert');
-var models = require('./models');
+//var models = require('./models');
 
 var URL_ROOT = 'http://localhost:3000/api/v1';
 
@@ -179,6 +179,84 @@ describe('Category API', function(){
 		});
 	});
 
+	it('can load a category by id', function(done){
+		Category.create({ _id: 'Electronics' }, function(error, doc){
+			assert.ifError(error);
+			var url = URL_ROOT+'/category/id/Electronics';
+
+			superagent.get(url, function(error, res){
+				assert.ifError(error);
+				var result;
+				assert.doesNotThrow(function(){
+					result = JSON.parse(res.text);
+				});
+				assert.ok(result.category);
+				assert.equal( result.category._id, 'Electronics' );
+				done();
+			});
+
+		});
+	});
+
+	it('can load all categories', function(done){
+		var categories = [
+		{ _id: 'Electronics' },
+		{ _id: 'Phones', parent: 'Electronics' },
+		{ _id: 'Laptops', parent: 'Electronics' },
+		{ _id: 'Bacon' }
+		];
+
+		Category.create( categories, function(error, categories){
+			assert.ifError(error);
+			var url = URL_ROOT+'/category/parent/Electronics';
+
+			superagent.get(url, function(error, res){
+				assert.ifError(error);
+
+				var result;
+				assert.doesNotThrow(function(){
+					result = JSON.parse(res.text);
+				});
+				assert.equal( result.categories.length, 2 );
+				assert.equal( result.categories[0]._id, 'Laptops' );
+				assert.equal( result.categories[1]._id, 'Phones' );
+				done();
+			});
+		});
+	});
+});
+
+describe('Product Api', function(){
+	var server;
+	var Category;
+	var Product;
+
+	before( function(){
+		//var app = express();
+
+		// models = require('./models')(wagner);
+		//app.use( require('./api')(wagner) );
+
+		//server = app.listen(3000);
+		//console.log(server);
+		Category = models.Category;
+		Product = models.Product;
+	});
+
+	after( function(){
+		//server.close();
+	});
+
+	beforeEach(function(done){
+		Category.remove({}, function(error){
+			assert.ifError(error);
+			Product.remove({}, function(error){
+				assert.ifError(error);
+				done();
+			});
+		});
+	});
+
 	it('can load a product by id', function(done){
 		var PRODUCT_ID = '000000000000000000000001';
 		var product = {
@@ -273,55 +351,8 @@ describe('Category API', function(){
 						done();
 					});
 				});
-
-
 			});
 		});
 	});
 
-	it('can load a category by id', function(done){
-		Category.create({ _id: 'Electronics' }, function(error, doc){
-			assert.ifError(error);
-			var url = URL_ROOT+'/category/id/Electronics';
-
-			superagent.get(url, function(error, res){
-				assert.ifError(error);
-				var result;
-				assert.doesNotThrow(function(){
-					result = JSON.parse(res.text);
-				});
-				assert.ok(result.category);
-				assert.equal( result.category._id, 'Electronics' );
-				done();
-			});
-
-		});
-	});
-
-	it('can load all categories', function(done){
-		var categories = [
-		{ _id: 'Electronics' },
-		{ _id: 'Phones', parent: 'Electronics' },
-		{ _id: 'Laptops', parent: 'Electronics' },
-		{ _id: 'Bacon' }
-		];
-
-		Category.create( categories, function(error, categories){
-			assert.ifError(error);
-			var url = URL_ROOT+'/category/parent/Electronics';
-
-			superagent.get(url, function(error, res){
-				assert.ifError(error);
-
-				var result;
-				assert.doesNotThrow(function(){
-					result = JSON.parse(res.text);
-				});
-				assert.equal( result.categories.length, 2 );
-				assert.equal( result.categories[0]._id, 'Laptops' );
-				assert.equal( result.categories[1]._id, 'Phones' );
-				done();
-			});
-		});
-	});
 });
