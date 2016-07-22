@@ -156,7 +156,6 @@ describe('User api', function(){
 	});
 
 });
-/*
 
 describe('Category API', function(){
 	var server;
@@ -166,7 +165,7 @@ describe('Category API', function(){
 	before( function(){
 		var app = express();
 
-		models = require('./models')(wagner);
+		// models = require('./models')(wagner);
 		app.use( require('./api')(wagner) );
 
 		server = app.listen(3000);
@@ -174,7 +173,7 @@ describe('Category API', function(){
 		Product = models.Product;
 	});
 
-	beforeEach(function(done){
+	afterEach(function(done){
 		Category.remove({}, function(error){
 			assert.ifError(error);
 			Product.remove({}, function(error){
@@ -182,6 +181,10 @@ describe('Category API', function(){
 				done();
 			});
 		});
+	});
+
+	after( function(){
+		server.close();
 	});
 
 	it('can load a category by id', function(done){
@@ -250,7 +253,7 @@ describe('Product Api', function(){
 		server.close();
 	});
 
-	beforeEach(function(done){
+	afterEach(function(done){
 		Category.remove({}, function(error){
 			assert.ifError(error);
 			Product.remove({}, function(error){
@@ -359,4 +362,3 @@ describe('Product Api', function(){
 	});
 
 });
-*/
