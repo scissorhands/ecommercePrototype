@@ -6,7 +6,6 @@ var models = require('./models');
 
 var URL_ROOT = 'http://localhost:3000';
 
-/*
 describe('User api', function(){
 	var server;
 	var Category;
@@ -15,20 +14,26 @@ describe('User api', function(){
 	var PRODUCT_ID = '000000000000000000000001';
 
 	before( function(){
-		//var app = express();
-
+		var app = express();
 		models = require('./models')(wagner);
-		//app.use( require('./api')(wagner) );
 
-		//server = app.listen(3000);
-		//console.log(server);
 		Category = models.Category;
 		Product = models.Product;
 		User = models.User;
+
+		app.use( function(req, res, next){
+			User.findOne({}, function(error, user){
+				assert.ifError(error);
+				req.user = user;
+				next();
+			});
+		});
+
+		app.use( require('./api')(wagner) );
+		server = app.listen(3000);
 	});
 
 	afterEach( function(done){
-		//server.close();
 		Category.remove({}, function(error){
 			assert.ifError(error);
 			Product.remove({}, function(error){
@@ -39,6 +44,10 @@ describe('User api', function(){
 				});
 			});
 		});
+	});
+
+	after( function(){
+		server.close();
 	});
 
 	beforeEach(function(done){
@@ -147,7 +156,8 @@ describe('User api', function(){
 	});
 
 });
-*/
+/*
+
 describe('Category API', function(){
 	var server;
 	var Category;
@@ -162,10 +172,6 @@ describe('Category API', function(){
 		server = app.listen(3000);
 		Category = models.Category;
 		Product = models.Product;
-	});
-
-	after( function(){
-		server.close();
 	});
 
 	beforeEach(function(done){
@@ -353,3 +359,4 @@ describe('Product Api', function(){
 	});
 
 });
+*/
