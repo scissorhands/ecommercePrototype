@@ -12,8 +12,11 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "express-session": "^1.14.0",
     "http-status": "^0.2.3",
     "mongoose": "^4.5.3",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
     "underscore": "^1.8.3",
     "wagner-core": "^0.2.0"
   },
