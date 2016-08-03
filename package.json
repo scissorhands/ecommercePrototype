@@ -17,6 +17,7 @@
     "mongoose": "^4.5.3",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
+    "stripe": "^4.9.0",
     "underscore": "^1.8.3",
     "wagner-core": "^0.2.0"
   },
