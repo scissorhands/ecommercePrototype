@@ -10,5 +10,5 @@ module.exports = function(wagner){
 
   return {
     Stripe: stripe
-  }
-}
+  };
+};
