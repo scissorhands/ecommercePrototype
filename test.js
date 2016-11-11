@@ -137,8 +137,10 @@ describe('cart', function(){
 					assert.equal(res.status, 200);
 					var result;
 					assert.doesNotThrow( function(){
-						result = JSON.parse(rest.text);
+						result = JSON.parse(res.text);
+
 					});
+
 
 					// API call gives us back a charge id.
 					assert.ok(result.id);
@@ -503,8 +505,8 @@ describe('Product Api', function(){
 							result = JSON.parse(res.text);
 						});
 						assert.equal( result.products.length, 2 );
-						assert.equal( result.products[0].name, 'LG G4' );
-						assert.equal( result.products[1].name, 'Asus Zenbook Prime' );
+						assert.equal( result.products[0].name, 'Asus Zenbook Prime' );
+						assert.equal( result.products[1].name, 'LG G4' );
 						done();
 					});
 				});

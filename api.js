@@ -121,13 +121,11 @@ module.exports = function(wagner){
 			}
 
 			// Populate the products in users cart
-			req.user.populate({ path: 'data.chart.product', model: 'Product'}, function(error, user){
+			req.user.populate({ path: 'data.cart.product', model: 'Product'}, function(error, user){
 				// Sum up the total price in USD
 				var totalCostUSD = 0;
-				console.log('Hi! i am here.');
 				_.each(user.data.cart, function(item){
-					console.log(item);
-					totalCostUSD += item.internal.aproximatedPriceUSD*item.quantity;
+					totalCostUSD += item.product.internal.aproximatedPriceUSD*item.quantity;
 				});
 
 				// And create a charge in Stripe corresponding to the price

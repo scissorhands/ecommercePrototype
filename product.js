@@ -13,7 +13,7 @@ var productSchema = {
 			type: Number,
 			required: true,
 			set: function(v){
-				this.internal.approximatedPriceUSD =v/(fx()[this.price.currency] || 1);
+				this.internal.aproximatedPriceUSD =v/(fx()[this.price.currency] || 1);
 				return v;
 			}
 		},
@@ -22,14 +22,14 @@ var productSchema = {
 			enum: ['USD','EUR','GBP'],
 			required: true,
 			set: function(v){
-				this.internal.approximatedPriceUSD = this.price.amount/(fx()[v] || 1);
+				this.internal.aproximatedPriceUSD = this.price.amount/(fx()[v] || 1);
 				return v;
 			}
 		}
 	},
 	category: Category.categorySchema,
 	internal:{
-		approximatePriceUSD: Number
+		aproximatedPriceUSD: Number
 	}
 };
 
