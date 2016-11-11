@@ -20,6 +20,7 @@ describe('cart', function(){
 		Category = models.Category;
 		Product = models.Product;
 		User = models.User;
+		Stripe = require('./dependencies')(wagner).Stripe;
 
 		app.use( function(req, res, next){
 			User.findOne({}, function(error, user){

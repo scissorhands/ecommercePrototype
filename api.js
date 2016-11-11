@@ -1,6 +1,7 @@
 var bodyparser = require('body-parser');
 var express = require('express');
 var status = require('http-status');
+var _ = require('underscore');
 
 function handleOne( property, res, error, result){
 	if(error){
@@ -123,8 +124,10 @@ module.exports = function(wagner){
 			req.user.populate({ path: 'data.chart.product', model: 'Product'}, function(error, user){
 				// Sum up the total price in USD
 				var totalCostUSD = 0;
+				console.log('Hi! i am here.');
 				_.each(user.data.cart, function(item){
-					totalCostUSD += item.product.internal.aproximatedPriceUSD*item.quantity;
+					console.log(item);
+					totalCostUSD += item.internal.aproximatedPriceUSD*item.quantity;
 				});
 
 				// And create a charge in Stripe corresponding to the price
